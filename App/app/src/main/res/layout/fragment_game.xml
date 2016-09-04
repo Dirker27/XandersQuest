@@ -1,30 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fragment_game"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#FF0000"
-        android:text="@string/hello_world"/>
+    <com.toastercat.xander.GameView
+        android:id="@+id/view_game_portal"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#00FF00"
-        android:text="@string/hello_world"/>
+        android:layout_below="@id/view_game_portal"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPendingFeatureBackground"
+        android:textColor="@color/colorPendingFeatureText"
+        android:text="@string/todo_scoreboard"/>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="#0000FF"
-        android:text="@string/hello_world"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_world"/>
-
-</LinearLayout>
+</RelativeLayout>
