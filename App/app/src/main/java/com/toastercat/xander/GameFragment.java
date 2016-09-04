@@ -2,6 +2,7 @@ package com.toastercat.xander;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
  * @author Dirk Hortensius
  */
 public class GameFragment extends Fragment {
+    private static final String TAG = "GameFragment";
 
     /**
      * External Static Constructor
@@ -19,6 +21,7 @@ public class GameFragment extends Fragment {
      * Generate instance ready for consumption by root activities.
      */
     public static Fragment newInstance() {
+        Log.v(TAG, "Generating new Instance.");
         return new GameFragment();
     }
 
