@@ -13,7 +13,6 @@ public class Player extends GameObject {
     public Player() {
         super();
 
-        setLocation(75, 75);
         setSpriteColor(Color.CYAN);
     }
 

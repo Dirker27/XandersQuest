@@ -14,8 +14,8 @@ public class GameObject {
     //
     // TODO: create Transform object
     //
-    private Float[] location;
-    private Float[] size;
+    private Float[] location; // [X, Y, Z] - Z doesn't do anything yet
+    private Float[] size;     // (X, Y)
     private float scale;
 
     //- Render Attrs -------------------------------------=
@@ -43,6 +43,8 @@ public class GameObject {
         this.size = new Float[2];
         this.size[0] = 1f;
         this.size[1] = 1f;
+
+        this.scale = 1f;
 
         this.spriteColor = Color.MAGENTA;
         this.spriteImage = null;

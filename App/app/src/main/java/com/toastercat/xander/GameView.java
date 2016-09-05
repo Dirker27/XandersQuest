@@ -16,6 +16,7 @@ import android.view.View;
  */
 public class GameView extends View {
     private static final String TAG = "GameView";
+    private static final float RENDER_SCALE = 50f;
 
     private final Paint paint;
     private Rect bounds;
@@ -45,7 +46,7 @@ public class GameView extends View {
         }
 
         // Draw Background
-        this.paint.setColor(Color.BLACK);
+        paint.setColor(Color.BLACK);
         canvas.drawRect(bounds, paint);
 
         //- Draw Game Objects ----------------------------=
@@ -76,17 +77,20 @@ public class GameView extends View {
     private void _renderGameObject(final GameObject object, final Canvas canvas) {
         paint.setColor(object.getSpriteColor());
 
-        float adaptedSizeX = object.getSize()[0] * 50f;
-        float adaptedSizeY = object.getSize()[1] * 50f;
+        float adaptedSizeX = object.getSize()[0] * object.getScale() * RENDER_SCALE;
+        float adaptedSizeY = object.getSize()[1] * object.getScale() * RENDER_SCALE;
+
+        float adaptedLocX = object.getLocation()[0] * RENDER_SCALE;
+        float adaptedLocY = object.getLocation()[1] * RENDER_SCALE;
 
         //- Transform Game -> Canvas Coordinates ---------=
         //
         // X [left, right]
-        float left  = bounds.left + (object.getLocation()[0] - (adaptedSizeX / 2f));
-        float right = bounds.left + (object.getLocation()[0] + (adaptedSizeX / 2f));
+        float left  = bounds.left + (adaptedLocX - (adaptedSizeX / 2f));
+        float right = bounds.left + (adaptedLocX + (adaptedSizeX / 2f));
         // Y [top, bottom]
-        float top    = bounds.bottom - (object.getLocation()[1] + (adaptedSizeY / 2f));
-        float bottom = bounds.bottom - (object.getLocation()[1] - (adaptedSizeY / 2f));
+        float top    = bounds.bottom - (adaptedLocY + (adaptedSizeY / 2f));
+        float bottom = bounds.bottom - (adaptedLocY - (adaptedSizeY / 2f));
 
         Log.v(TAG, String.format("Draw at [%s, %s], [%s, %s]", left, right, top, bottom));
         canvas.drawRect(left, top, right, bottom, paint);
