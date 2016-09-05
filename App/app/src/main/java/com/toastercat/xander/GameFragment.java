@@ -15,6 +15,14 @@ import android.view.ViewGroup;
 public class GameFragment extends Fragment {
     private static final String TAG = "GameFragment";
 
+    private GameModel model;
+
+    public GameFragment() {
+        super();
+
+        this.model = new GameModel();
+    }
+
     /**
      * External Static Constructor
      *
@@ -30,6 +38,9 @@ public class GameFragment extends Fragment {
                              final ViewGroup container,
                              final Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_game, container, false);
+
+        GameView gameView = (GameView) view.findViewById(R.id.view_game_portal);
+        gameView.setModel(this.model);
 
         // TODO: Initialization
 
