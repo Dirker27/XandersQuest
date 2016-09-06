@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.toastercat.xander.game.GameManager;
+import com.toastercat.xander.util.LogTag;
 
 /**
  * Persistable Fragment to manage UI during gameplay
@@ -15,7 +16,6 @@ import com.toastercat.xander.game.GameManager;
  * @author Dirk Hortensius
  */
 public class GameFragment extends Fragment {
-    private static final String TAG = "GameFragment";
 
     private GameManager gm;
 
@@ -31,7 +31,7 @@ public class GameFragment extends Fragment {
      * Generate instance ready for consumption by root activities.
      */
     public static Fragment newInstance() {
-        Log.v(TAG, "Generating new Instance.");
+        Log.v(LogTag.APP_LIFECYCLE, "Generating new Fragment Instance.");
         return new GameFragment();
     }
 
@@ -45,6 +45,38 @@ public class GameFragment extends Fragment {
         gameView.setModel(this.gm.getModel());
         gameView.setInputAuthority(this.gm.getInputAuthority());
 
+        this.gm.startNewSession();
+
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(LogTag.APP_LIFECYCLE, "Fragment onStart.");
+
+        this.gm.startNewSession();
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(LogTag.APP_LIFECYCLE, "Fragment onPause.");
+
+        this.gm.endSession();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(LogTag.APP_LIFECYCLE, "Fragment onResume.");
+    }
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(LogTag.APP_LIFECYCLE, "Fragment onStop.");
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(LogTag.APP_LIFECYCLE, "Fragment onDestroy.");
     }
 }
