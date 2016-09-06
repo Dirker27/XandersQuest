@@ -10,10 +10,12 @@ import com.toastercat.xander.game.GameObject;
  * @author Dirk Hortensius [Dirker27]
  */
 public class Player extends GameObject {
-    private boolean alive = true;
+    private boolean alive;
 
     public Player() {
         super();
+
+        this.alive = true;
 
         setSpriteColor(Color.CYAN);
     }

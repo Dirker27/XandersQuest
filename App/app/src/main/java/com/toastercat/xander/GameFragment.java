@@ -43,6 +43,7 @@ public class GameFragment extends Fragment {
 
         GameView gameView = (GameView) view.findViewById(R.id.view_game_portal);
         gameView.setModel(this.gm.getModel());
+        gameView.setInputAuthority(this.gm.getInputAuthority());
 
         return view;
     }

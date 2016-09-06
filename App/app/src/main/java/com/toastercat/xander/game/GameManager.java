@@ -1,5 +1,7 @@
 package com.toastercat.xander.game;
 
+import com.toastercat.xander.input.InputAuthority;
+
 /**
  * Manages a game instance.
  *
@@ -14,9 +16,11 @@ public class GameManager {
     private static final String TAG_GAME = "[Game]";
 
     private GameModel model;
+    private InputAuthority inputAuthority;
 
     public GameManager() {
         this.model = new GameModel();
+        this.inputAuthority = new InputAuthority(this.model);
     }
 
     public void startNewSession() {
@@ -30,5 +34,8 @@ public class GameManager {
 
     public GameModel getModel() {
         return this.model;
+    }
+    public InputAuthority getInputAuthority() {
+        return this.inputAuthority;
     }
 }
