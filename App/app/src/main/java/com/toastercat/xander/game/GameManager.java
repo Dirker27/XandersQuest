@@ -3,6 +3,7 @@ package com.toastercat.xander.game;
 import android.os.SystemClock;
 import android.util.Log;
 
+import com.toastercat.xander.GameView;
 import com.toastercat.xander.game.actor.Player;
 import com.toastercat.xander.input.InputAuthority;
 import com.toastercat.xander.util.LogTag;
@@ -22,6 +23,7 @@ public class GameManager {
 
     private GameModel model;
     private InputAuthority inputAuthority;
+    private GameView view;
 
     private Thread gameThread;
     private volatile boolean gameThreadRunning;
@@ -88,6 +90,9 @@ public class GameManager {
                     for (GameObject obj : model.getEnemyObjects()) {
                         obj.update(clockTick);
                     }
+
+                    // Start Render Frame
+                    view.draw();
                 }
             }
         }
@@ -118,5 +123,9 @@ public class GameManager {
     }
     public InputAuthority getInputAuthority() {
         return this.inputAuthority;
+    }
+
+    public void setView(final GameView view) {
+        this.view = view;
     }
 }

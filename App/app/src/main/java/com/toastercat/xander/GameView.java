@@ -8,29 +8,35 @@ import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 
 import com.toastercat.xander.game.GameModel;
 import com.toastercat.xander.game.GameObject;
 import com.toastercat.xander.input.InputAuthority;
+import com.toastercat.xander.util.LogTag;
 
 /**
  * Custom 2D Sprite View to render game world
  *
  * @author Dirk Hortensius [Dirker27]
  */
-public class GameView extends View {
-    private static final String TAG_RENDER = "[Frame Render]";
+public class GameView extends SurfaceView {
     private static final String TAG_INPUT  = "[Input]";
     private static final float RENDER_SCALE = 50f;
 
+    // Game Components
+    private GameModel model;
     private InputAuthority inputAuthority;
 
+    // Drawing Utilities
     private final Paint paint;
+    private final SurfaceHolder surfaceHolder;
     private Rect bounds;
 
-    private GameModel model;
-
+    /**
+     * Constructor chain
+     */
     public GameView(final Context context) {
         this(context, null);
     }
@@ -41,15 +47,24 @@ public class GameView extends View {
         super(context, attrs, defStyleAttr);
 
         paint = new Paint();
+        surfaceHolder = getHolder();
     }
 
-    @Override
-    public void onDraw(final Canvas canvas) {
-        Log.v(TAG_RENDER, "Rendering View Frame...");
+    public void draw() {
+        Log.v(LogTag.RENDER_FRAME, "Rendering View Frame...");
+
+        final Canvas canvas;
+        if (surfaceHolder.getSurface().isValid()) {
+            // Lock the canvas ready to draw
+            canvas = surfaceHolder.lockCanvas();
+        } else {
+            Log.e(LogTag.RENDER_FRAME, "Cannot complete render pass - canvas is null.");
+            return;
+        }
 
         _extractBoundaries(canvas);
         if (bounds == null) {
-            Log.e(TAG_RENDER, "Cannot complete render pass - no boundaries are defined.");
+            Log.e(LogTag.RENDER_FRAME, "Cannot complete render pass - no boundaries are defined.");
             return;
         }
 
@@ -60,25 +75,27 @@ public class GameView extends View {
         //- Draw Game Objects ----------------------------=
         //
         if (model == null) {
-            Log.v(TAG_RENDER, "No model set - nothing left to draw.");
+            Log.v(LogTag.RENDER_FRAME, "No model set - nothing left to draw.");
             return;
         }
         // Terrain
-        Log.v(TAG_RENDER, "Rendering Terrain");
+        Log.v(LogTag.RENDER_FRAME, "Rendering Terrain");
         for (GameObject obj : this.model.getTerrainObjects()) {
             _renderGameObject(obj, canvas);
         }
         // Player
-        Log.v(TAG_RENDER, "Rendering Player");
+        Log.v(LogTag.RENDER_FRAME, "Rendering Player");
         _renderGameObject(this.model.getPlayer(), canvas);
         // Enemies
-        Log.v(TAG_RENDER, "Rendering Enemies");
+        Log.v(LogTag.RENDER_FRAME, "Rendering Enemies");
         for (GameObject obj : this.model.getEnemyObjects()) {
             _renderGameObject(obj, canvas);
         }
 
-        Log.v(TAG_RENDER, "Render Pass Complete.");
+        surfaceHolder.unlockCanvasAndPost(canvas);
+        Log.v(LogTag.RENDER_FRAME, "Render Pass Complete.");
     }
+
     private void _extractBoundaries(final Canvas canvas) {
         bounds = canvas.getClipBounds();
     }
@@ -100,7 +117,8 @@ public class GameView extends View {
         float top    = bounds.bottom - (adaptedLocY + (adaptedSizeY / 2f));
         float bottom = bounds.bottom - (adaptedLocY - (adaptedSizeY / 2f));
 
-        Log.v(TAG_RENDER, String.format("Draw at [%s, %s], [%s, %s]", left, right, top, bottom));
+        Log.v(LogTag.RENDER_FRAME,
+                String.format("Draw at [%s, %s], [%s, %s]", left, right, top, bottom));
         canvas.drawRect(left, top, right, bottom, paint);
     }
 

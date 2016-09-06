@@ -1,10 +1,8 @@
 package com.toastercat.xander.game.actor;
 
 import android.graphics.Color;
-import android.util.Log;
 
 import com.toastercat.xander.game.GameObject;
-import com.toastercat.xander.util.LogTag;
 
 /**
  * Don't hate the player.
