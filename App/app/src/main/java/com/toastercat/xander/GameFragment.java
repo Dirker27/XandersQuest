@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.toastercat.xander.game.GameManager;
+
 /**
  * Persistable Fragment to manage UI during gameplay
  *
@@ -15,12 +17,12 @@ import android.view.ViewGroup;
 public class GameFragment extends Fragment {
     private static final String TAG = "GameFragment";
 
-    private GameModel model;
+    private GameManager gm;
 
     public GameFragment() {
         super();
 
-        this.model = new GameModel();
+        this.gm = new GameManager();
     }
 
     /**
@@ -40,9 +42,7 @@ public class GameFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_game, container, false);
 
         GameView gameView = (GameView) view.findViewById(R.id.view_game_portal);
-        gameView.setModel(this.model);
-
-        // TODO: Initialization
+        gameView.setModel(this.gm.getModel());
 
         return view;
     }

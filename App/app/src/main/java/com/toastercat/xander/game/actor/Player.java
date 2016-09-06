@@ -1,6 +1,8 @@
-package com.toastercat.xander;
+package com.toastercat.xander.game.actor;
 
 import android.graphics.Color;
+
+import com.toastercat.xander.game.GameObject;
 
 /**
  * Don't hate the player.

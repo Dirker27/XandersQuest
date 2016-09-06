@@ -1,6 +1,8 @@
-package com.toastercat.xander;
+package com.toastercat.xander.game;
 
 import android.graphics.Color;
+
+import com.toastercat.xander.game.actor.Player;
 
 import java.util.ArrayList;
 

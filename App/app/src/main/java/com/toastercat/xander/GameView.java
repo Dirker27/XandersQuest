@@ -9,6 +9,9 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import com.toastercat.xander.game.GameModel;
+import com.toastercat.xander.game.GameObject;
+
 /**
  * Custom 2D Sprite View to render game world
  *
