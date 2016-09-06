@@ -60,9 +60,20 @@ public class GameObject {
         /* STUB */
     }
 
+    //~ --------------------------------------------------------- ~//
+    // OBJECT ACTIONS
+    //~ --------------------------------------------------------- ~//
+    public void move(final float dx, final float dy) {
+        this.move(dx, dy, 0f);
+    }
+    public void move(final float dx, final float dy, final float dz) {
+        this.location[0] += dx;
+        this.location[1] += dy;
+        this.location[2] += dz;
+    }
 
     //~ --------------------------------------------------------- ~//
-    // ACCESSORS
+    // DIRECT ACCESSORS
     //~ --------------------------------------------------------- ~//
 
     // Location

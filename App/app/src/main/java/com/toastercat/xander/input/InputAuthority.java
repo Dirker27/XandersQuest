@@ -4,6 +4,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 import com.toastercat.xander.game.GameModel;
+import com.toastercat.xander.game.actor.Player;
+import com.toastercat.xander.util.LogTag;
 
 /**
  * The Authoritative source of all actions input.
@@ -11,7 +13,6 @@ import com.toastercat.xander.game.GameModel;
  * @author Dirk Hortensius [Dirker27]
  */
 public class InputAuthority {
-    private static final String TAG_INPUT = "[User Action]";
     private GameModel model;
 
     private boolean screenTouch = false;
@@ -30,7 +31,9 @@ public class InputAuthority {
     }
 
     private void jumpStart() {
-        Log.v(TAG_INPUT, "Player Jump.");
-        // TODO
+        Log.d(LogTag.USER_ACTION, "Player Jump.");
+
+        Player p = model.getPlayer();
+        p.jump();
     }
 }
