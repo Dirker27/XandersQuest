@@ -2,6 +2,9 @@ package com.toastercat.xander.game;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.util.Log;
+
+import com.toastercat.xander.util.LogTag;
 
 /**
  * Base Game Object - any entity that exists in, can affect, or be affected by
@@ -48,6 +51,13 @@ public class GameObject {
 
         this.spriteColor = Color.MAGENTA;
         this.spriteImage = null;
+    }
+
+    /**
+     * Called by the master update thread.
+     */
+    public void update(final long clockTick) {
+        /* STUB */
     }
 
 

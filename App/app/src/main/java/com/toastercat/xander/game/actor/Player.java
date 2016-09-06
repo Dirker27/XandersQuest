@@ -1,8 +1,10 @@
 package com.toastercat.xander.game.actor;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import com.toastercat.xander.game.GameObject;
+import com.toastercat.xander.util.LogTag;
 
 /**
  * Don't hate the player.
@@ -18,6 +20,11 @@ public class Player extends GameObject {
         this.alive = true;
 
         setSpriteColor(Color.CYAN);
+    }
+
+    @Override
+    public void update(final long clockTick) {
+        super.update(clockTick);
     }
 
     public boolean isAlive() {
