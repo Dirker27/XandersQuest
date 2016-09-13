@@ -3,6 +3,7 @@ package com.toastercat.xander.game;
 import android.graphics.Color;
 
 import com.toastercat.xander.game.actor.Player;
+import com.toastercat.xander.game.object.GameObject;
 
 import java.util.ArrayList;
 

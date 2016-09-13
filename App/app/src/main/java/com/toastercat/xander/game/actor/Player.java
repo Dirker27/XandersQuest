@@ -3,7 +3,7 @@ package com.toastercat.xander.game.actor;
 import android.graphics.Color;
 import android.util.Log;
 
-import com.toastercat.xander.game.GameObject;
+import com.toastercat.xander.game.object.GameObject;
 
 /**
  * Don't hate the player.
@@ -26,7 +26,7 @@ public class Player extends GameObject {
 
         this.jumping = false;
         this.jumpPeaked = false;
-        this.jumpBase = this.getLocation()[1];
+        this.jumpBase = getLocation()[1];
 
         setSpriteColor(Color.CYAN);
     }
@@ -38,9 +38,6 @@ public class Player extends GameObject {
         if (jumping) {
             if (jumpPeaked) {
                 move(0f, -jumpSpeed);
-                if (getLocation()[1] < jumpBase) {
-                    jumping = false;
-                }
             } else {
                 move(0f, jumpSpeed);
                 if (getLocation()[1] > jumpBase + jumpHeight) {
@@ -51,6 +48,17 @@ public class Player extends GameObject {
         }
     }
 
+    @Override
+    public void onCollide(final GameObject collisionObject) {
+        // Lock to top of object
+        this.mountBottomToObject(collisionObject);
+
+        // End Jump
+        this.jumping = false;
+        this.jumpPeaked = false;
+        this.jumpBase = getLocation()[1];
+    }
+
     public boolean isAlive() {
         return alive;
     }
@@ -59,5 +67,14 @@ public class Player extends GameObject {
         this.jumping = true;
         this.jumpPeaked = false;
         this.jumpBase = getLocation()[1];
+    }
+
+    private void mountBottomToObject(final GameObject object) {
+        Log.d("Jump", "Mounting to Floor.");
+
+        float floor = object.getTopBound();
+        float offset = getScale() * (getSize()[1]/2f);
+
+        setLocation(getLocation()[0], floor + offset);
     }
 }

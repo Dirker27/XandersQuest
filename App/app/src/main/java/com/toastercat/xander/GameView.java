@@ -12,7 +12,7 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.toastercat.xander.game.GameModel;
-import com.toastercat.xander.game.GameObject;
+import com.toastercat.xander.game.object.GameObject;
 import com.toastercat.xander.input.InputAuthority;
 import com.toastercat.xander.util.LogTag;
 

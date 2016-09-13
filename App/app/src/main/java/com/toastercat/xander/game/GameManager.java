@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.toastercat.xander.GameView;
 import com.toastercat.xander.game.actor.Player;
+import com.toastercat.xander.game.object.GameObject;
 import com.toastercat.xander.input.InputAuthority;
 import com.toastercat.xander.util.LogTag;
 
@@ -102,11 +103,21 @@ public class GameManager {
                     Log.v(LogTag.UPDATE_FRAME, String.format("GameFrame start with tick[%s].", clockTick));
                     this.tick();
 
+                    // Update Player
                     Player p = model.getPlayer();
                     p.update(clockTick);
 
+                    // Update Enemies
                     for (GameObject obj : model.getEnemyObjects()) {
                         obj.update(clockTick);
+                    }
+
+                    // Detect + Apply Floor Collision
+                    for (GameObject terrain : model.getTerrainObjects()) {
+                        if (terrain.detectCollision(p)) {
+                            p.onCollide(terrain);
+                            break;
+                        }
                     }
                 }
             }

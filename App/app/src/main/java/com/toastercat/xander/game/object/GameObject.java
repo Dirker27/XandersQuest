@@ -1,10 +1,7 @@
-package com.toastercat.xander.game;
+package com.toastercat.xander.game.object;
 
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.util.Log;
-
-import com.toastercat.xander.util.LogTag;
 
 /**
  * Base Game Object - any entity that exists in, can affect, or be affected by
@@ -57,7 +54,66 @@ public class GameObject {
      * Called by the master update thread.
      */
     public void update(final long clockTick) {
-        /* STUB */
+        /* NO-OP STUB */
+    }
+
+    /**
+     * Actions taken upon collision.
+     *
+     * Can modify only self (BL encapsulation).
+     */
+    public void onCollide(final GameObject collisionObject) {
+        /* NO-OP STUB */
+    }
+
+    /**
+     * Detect if we've collided with a given object.
+     *
+     * @return true iff object transforms overlap.
+     */
+    public boolean detectCollision(final GameObject obj) {
+        //- Right-Most left bound ------------------------=
+        //
+        final float rightMostLeftBound;
+        {
+            float myLeftBound = this.getLeftBound();
+            float theirLeftBound = obj.getLeftBound();
+            rightMostLeftBound = (myLeftBound > theirLeftBound)
+                    ? myLeftBound : theirLeftBound;
+        }
+
+        //- Left-Most right bound ------------------------=
+        //
+        final float leftMostRightBound;
+        {
+            float myRightBound = this.getRightBound();
+            float theirRightBound = obj.getRightBound();
+            leftMostRightBound = (myRightBound < theirRightBound)
+                    ? myRightBound : theirRightBound;
+        }
+
+        //- Top-Most bottom bound ------------------------=
+        //
+        final float topMostBottomBound;
+        {
+            float myBottomBound = this.getBottomBound();
+            float theirBottomBound = obj.getBottomBound();
+            topMostBottomBound = (myBottomBound > theirBottomBound)
+                    ? myBottomBound : theirBottomBound;
+        }
+
+        //- Bottom-Most top bound ------------------------=
+        //
+        final float bottomMostTopBound;
+        {
+            float myTopBound = this.getTopBound();
+            float theirTopBound = obj.getTopBound();
+            bottomMostTopBound = (myTopBound < theirTopBound)
+                    ? myTopBound : theirTopBound;
+        }
+
+        return rightMostLeftBound < leftMostRightBound
+                && topMostBottomBound < bottomMostTopBound;
     }
 
     //~ --------------------------------------------------------- ~//
@@ -70,6 +126,24 @@ public class GameObject {
         this.location[0] += dx;
         this.location[1] += dy;
         this.location[2] += dz;
+    }
+
+    //~ --------------------------------------------------------- ~//
+    // INDIRECT ACCESSORS
+    //~ --------------------------------------------------------- ~//
+
+    // Bounds
+    public float getLeftBound() {
+        return this.location[0] - ((this.size[0]/2f) * this.scale);
+    }
+    public float getRightBound() {
+        return this.location[0] + ((this.size[0]/2f) * this.scale);
+    }
+    public float getTopBound() {
+        return this.location[1] + ((this.size[1]/2f) * this.scale);
+    }
+    public float getBottomBound() {
+        return this.location[1] - ((this.size[1]/2f) * this.scale);
     }
 
     //~ --------------------------------------------------------- ~//
