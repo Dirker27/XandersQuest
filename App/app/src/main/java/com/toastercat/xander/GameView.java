@@ -23,7 +23,7 @@ import com.toastercat.xander.util.LogTag;
  */
 public class GameView extends SurfaceView {
     private static final String TAG_INPUT  = "[Input]";
-    private static final float RENDER_SCALE = 50f;
+    private static final float RENDER_SCALE = 75f;
 
     // Game Components
     private GameModel model;
@@ -50,6 +50,12 @@ public class GameView extends SurfaceView {
         surfaceHolder = getHolder();
     }
 
+    /**
+     * Called by the Game Manager's render thread.
+     *
+     * Replaces need for onDraw() - we want to render frames at explicit
+     *   intervals. (Controlled by GM, not by Android)
+     */
     public void draw() {
         Log.v(LogTag.RENDER_FRAME, "Rendering View Frame...");
 
