@@ -27,32 +27,26 @@ public class GameModel {
         this.player = p;
 
         this.terrainObjects = new ArrayList<>();
-        for (int t = 0; t < 10; t++) {
+        for (int t = 0; t < 3; t++) {
             GameObject obj = new GameObject();
-            obj.setLocation(t, 0);
+            obj.setLocation(t*10, t*2);
+            obj.setSize(8, 1);
             obj.setSpriteColor(Color.GRAY);
             this.terrainObjects.add(obj);
         }
 
         this.enemyObjects = new ArrayList<>();
-        for (int e = 0; e < 5; e++) {
+        for (int e = 0; e < 3; e++) {
             GameObject obj = new GameObject();
-            obj.setLocation(e, 10);
+            obj.setLocation(10+e, 3+e);
             obj.setSpriteColor(Color.RED);
             this.enemyObjects.add(obj);
         }
 
         p = new Player();
-        p.setLocation(2, 2);
-        this.enemyObjects.add(p);
-        p = new Player();
-        p.setLocation(3, 3);
-        this.enemyObjects.add(p);
-
-        p = new Player();
         p.setLocation(7, 7);
         p.setScale(4);
-        p.setSpriteColor(Color.WHITE);
+        p.setSpriteColor(Color.YELLOW);
         this.enemyObjects.add(p);
     }
 
